@@ -1,6 +1,6 @@
 import express from "express";
 import fs from "fs";
-import { getImagesPath } from "../../helpers";
+import { getImagesExtension, getImagesPath } from "../../helpers";
 import Sharp from "sharp";
 
 
@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
         return res.status(422).send("Height or width are not valid");
     }
 
-    const fullImagePath = getImagesPath(filename)
+    const fullImagePath = getImagesPath(filename);
 
     if (! fs.existsSync(fullImagePath)) {
         return res.status(404).send("Chosen image does not exist");
@@ -48,18 +48,13 @@ router.get("/", async (req, res) => {
         if (metadata.height !== height || metadata.width !== width) {
             sharp = Sharp(fullImagePath).resize(width, height);
 
-            try {
-                const bufferedImage = await sharp.toBuffer();
-                fs.writeFileSync(thumbImagePath, bufferedImage);
-            } catch (error) {
-                console.error(error);
-            }
+            const extension = getImagesExtension(filename);
 
-            return res.sendFile(thumbImagePath);
+            res.contentType(extension);
+            return res.send(await sharp.toBuffer());
         }
 
         return res.sendFile(thumbImagePath);
-
     }
 
     let sharp = Sharp(fullImagePath);
