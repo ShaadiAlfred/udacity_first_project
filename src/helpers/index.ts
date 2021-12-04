@@ -1,7 +1,12 @@
 import path from "path";
 
-export const getImagesPath = (imagePath: string, isFull = true) => {
+export const getImagesPath = (imageFileName: string, isFull = true) => {
     let fullOrThumb = isFull ? "full" : "thumb";
 
-    return path.join(__dirname, "../../", `assets/${fullOrThumb}`, imagePath);
+    if (imageFileName.indexOf(".") > -1) {
+        return path.join(__dirname, "../../", `assets/${fullOrThumb}`, imageFileName);
+    } else {
+        return path.join(__dirname, "../../", `assets/${fullOrThumb}`, imageFileName + ".jpg");
+    }
+
 }
