@@ -49,3 +49,7 @@ Lints the project (just the `src` folder and its subdirectories) and shows the l
 - ### `npm run lintf`
 
 Lints and fixes any issues found in the code
+
+## Preview
+
+Uploading preview.mp4…
