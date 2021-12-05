@@ -55,6 +55,9 @@ router.get("/", async (req, res) => {
         await sharp.toFile(thumbImagePath);
     } catch (error) {
         console.error(error);
+
+        res.status(500);
+        return res.send("Error happened while processing the image, try again")
     }
 
     res.sendFile(thumbImagePath);
