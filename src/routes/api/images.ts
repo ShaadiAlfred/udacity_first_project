@@ -1,11 +1,7 @@
 import express from "express";
 import fs from "fs";
 import { getImagesExtension, getImagesPath } from "../../helpers";
-import Sharp from "sharp";
-
-if (process.platform === "win32") {
-    Sharp.cache(false);
-}
+import { doesImageHaveSameDimensions, getResizedBufferedImage } from "../../helpers/sharp";
 
 const router = express.Router();
 
@@ -36,28 +32,20 @@ router.get("/", async (req, res) => {
     if (fs.existsSync(thumbImagePath)) {
         isCached = true;
 
-        const sharp = Sharp(thumbImagePath);
-
-        const metadata = await sharp.metadata();
-
-        if (metadata.height === height && metadata.width === width) {
+        if (await doesImageHaveSameDimensions(thumbImagePath, width, height)) {
             return res.sendFile(thumbImagePath);
         }
     }
 
     const extension = getImagesExtension(filename);
 
-    let sharp = Sharp(fullImagePath);
-
-    sharp = sharp.resize(width, height);
-
     try {
-        const bufferedImage = await sharp.toBuffer();
+        const bufferedResizedImage = await getResizedBufferedImage(fullImagePath, width, height);
 
         // Cache if it doesn't exist
         if (!isCached) {
             try {
-                fs.writeFileSync(thumbImagePath, bufferedImage);
+                fs.writeFileSync(thumbImagePath, bufferedResizedImage);
             } catch (error) {
                 console.error("Error while caching");
                 console.error(error);
@@ -65,7 +53,7 @@ router.get("/", async (req, res) => {
         }
 
         res.contentType(extension);
-        return res.send(bufferedImage);
+        return res.send(bufferedResizedImage);
     } catch (error) {
         console.error("Error while sending response");
         console.error(error);
