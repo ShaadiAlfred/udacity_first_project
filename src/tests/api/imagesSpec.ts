@@ -5,7 +5,6 @@ import { getImagesPath } from "../../helpers";
 import Sharp from "sharp";
 
 fdescribe("GET /api/images", async () => {
-
     it("should return an error due to an empty filename", (done) => {
         request(app)
             .get("/api/images?width=200&height=100")
@@ -53,7 +52,7 @@ fdescribe("GET /api/images", async () => {
             .get("/api/images?filename=image&width=200&height=200")
             .expect(200)
             .expect("Content-Type", "image")
-            .end(async (err, res) => {
+            .end(async () => {
                 // A new thumb should have been generated
                 expect(fs.existsSync(getImagesPath(imageFileName, false))).toBe(true);
 

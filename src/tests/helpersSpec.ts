@@ -36,5 +36,4 @@ describe("Helper functions tests", () => {
 
         expect(getImagesPath(imageFileName2, false)).toEqual(expectedPath);
     });
-
 });

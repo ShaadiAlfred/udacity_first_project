@@ -3,11 +3,9 @@ import fs from "fs";
 import { getImagesExtension, getImagesPath } from "../../helpers";
 import Sharp from "sharp";
 
-
 if (process.platform === "win32") {
     Sharp.cache(false);
 }
-
 
 const router = express.Router();
 
@@ -26,7 +24,7 @@ router.get("/", async (req, res) => {
 
     const fullImagePath = getImagesPath(filename);
 
-    if (! fs.existsSync(fullImagePath)) {
+    if (!fs.existsSync(fullImagePath)) {
         return res.status(404).send("Chosen image does not exist");
     }
 
