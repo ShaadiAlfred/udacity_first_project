@@ -16,15 +16,7 @@ router.get("/", async (req, res) => {
     const width = parseInt(req.query.width as string);
     const height = parseInt(req.query.height as string);
 
-    if (
-        filename === undefined ||
-        width === undefined ||
-        height === undefined
-    ) {
-        return res.status(422).send("Missing parameters");
-    }
-
-    if (filename.length === 0) {
+    if (filename === undefined || filename.length === 0) {
         return res.status(422).send("You have to enter a filename");
     }
 
