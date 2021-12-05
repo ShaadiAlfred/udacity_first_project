@@ -30,37 +30,49 @@ router.get("/", async (req, res) => {
 
     const thumbImagePath = getImagesPath(filename, false);
 
+    let isCached = false;
+
+    // If the image is cached, return the cached image in case it has the same dimensions
     if (fs.existsSync(thumbImagePath)) {
-        let sharp = Sharp(thumbImagePath);
+        isCached = true;
+
+        const sharp = Sharp(thumbImagePath);
 
         const metadata = await sharp.metadata();
 
-        if (metadata.height !== height || metadata.width !== width) {
-            sharp = Sharp(fullImagePath).resize(width, height);
-
-            const extension = getImagesExtension(filename);
-
-            res.contentType(extension);
-            return res.send(await sharp.toBuffer());
+        if (metadata.height === height && metadata.width === width) {
+            return res.sendFile(thumbImagePath);
         }
-
-        return res.sendFile(thumbImagePath);
     }
+
+    const extension = getImagesExtension(filename);
 
     let sharp = Sharp(fullImagePath);
 
     sharp = sharp.resize(width, height);
 
     try {
-        await sharp.toFile(thumbImagePath);
+        const bufferedImage = await sharp.toBuffer();
+
+        // Cache if it doesn't exist
+        if (!isCached) {
+            try {
+                fs.writeFileSync(thumbImagePath, bufferedImage);
+            } catch (error) {
+                console.error("Error while caching");
+                console.error(error);
+            }
+        }
+
+        res.contentType(extension);
+        return res.send(bufferedImage);
     } catch (error) {
+        console.error("Error while sending response");
         console.error(error);
 
         res.status(500);
-        return res.send("Error happened while processing the image, try again")
+        return res.send("Error happened while processing the image, try again");
     }
-
-    res.sendFile(thumbImagePath);
 });
 
 export default router;
