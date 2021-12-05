@@ -4,7 +4,41 @@ import fs from "fs";
 import { getImagesPath } from "../../helpers";
 import Sharp from "sharp";
 
-describe("GET /api/images", async () => {
+fdescribe("GET /api/images", async () => {
+
+    it("should return an error due to an empty filename", (done) => {
+        request(app)
+            .get("/api/images?width=200&height=100")
+            .expect(422)
+            .end(async (err, res) => {
+                expect(res.text).toEqual("You have to enter a filename");
+
+                done();
+            });
+    });
+
+    it("should return an error due to invalid filename that doesn't exist", (done) => {
+        request(app)
+            .get("/api/images?filename=nonexistent&width=200&height=100")
+            .expect(422)
+            .end(async (err, res) => {
+                expect(res.text).toEqual("Chosen image does not exist");
+
+                done();
+            });
+    });
+
+    it("should return an error due to invalid parameters", (done) => {
+        request(app)
+            .get("/api/images?filename=image&width")
+            .expect(422)
+            .end(async (err, res) => {
+                expect(res.text).toEqual("Height or width are not valid");
+
+                done();
+            });
+    });
+
     it("should generate a new thumbnail with correct dimensions", (done) => {
         const imageFileName = "image";
 
