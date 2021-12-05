@@ -4,7 +4,7 @@ import fs from "fs";
 import { getImagesPath } from "../../helpers";
 import Sharp from "sharp";
 
-fdescribe("GET /api/images", async () => {
+describe("GET /api/images", async () => {
     it("should return an error due to an empty filename", (done) => {
         request(app)
             .get("/api/images?width=200&height=100")
