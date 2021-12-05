@@ -52,4 +52,4 @@ Lints and fixes any issues found in the code
 
 ## Preview
 
-Uploading preview.mp4…
+https://user-images.githubusercontent.com/3685582/144757941-67a26bcb-5911-4d3b-b281-1e308a835508.mp4
