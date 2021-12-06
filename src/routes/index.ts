@@ -3,8 +3,8 @@ import apiRoutes from "./api";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.send("Hello World");
+router.get("/", (_: express.Request, res: express.Response): express.Response => {
+    return res.send("Hello World");
 });
 
 router.use("/api", apiRoutes);

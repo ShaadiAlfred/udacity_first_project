@@ -3,8 +3,8 @@ import imagesRoute from "./images";
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.send("Select a service");
+router.get("/", (_: express.Request, res: express.Response): express.Response => {
+    return res.send("Select a service");
 });
 
 router.use("/images", imagesRoute);
