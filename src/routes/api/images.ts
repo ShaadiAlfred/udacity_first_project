@@ -51,7 +51,7 @@ router.get(
             // Cache if it doesn't exist
             if (!isCached) {
                 try {
-                    fs.writeFileSync(thumbImagePath, bufferedResizedImage);
+                    await fs.promises.writeFile(thumbImagePath, bufferedResizedImage);
                 } catch (error) {
                     console.error("Error while caching");
                     next(error);
