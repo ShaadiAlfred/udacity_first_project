@@ -5,7 +5,7 @@ import { doesImageHaveSameDimensions, getResizedBufferedImage } from "../../help
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     const filename = req.query.filename as string;
     const width = parseInt(req.query.width as string);
     const height = parseInt(req.query.height as string);
@@ -48,7 +48,7 @@ router.get("/", async (req, res) => {
                 fs.writeFileSync(thumbImagePath, bufferedResizedImage);
             } catch (error) {
                 console.error("Error while caching");
-                console.error(error);
+                next(error);
             }
         }
 
@@ -56,10 +56,7 @@ router.get("/", async (req, res) => {
         return res.send(bufferedResizedImage);
     } catch (error) {
         console.error("Error while sending response");
-        console.error(error);
-
-        res.status(500);
-        return res.send("Error happened while processing the image, try again");
+        next(error);
     }
 });
 
