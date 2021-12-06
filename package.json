@@ -4,7 +4,7 @@
   "description": "Udacity first project",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "dev": "npx nodemon src/index.ts",
     "build": "npx ts",
     "jasmine": "jasmine --config=spec/support/jasmine.json",
