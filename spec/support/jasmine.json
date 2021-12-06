@@ -1,20 +1,15 @@
 {
-  "spec_dir": "dist/tests",
+    "spec_dir": "dist/tests",
 
-  "spec_files": [
-    "**/*[sS]pec.js",
-    "!**/*nospec.js"
-  ],
+    "spec_files": ["**/*[sS]pec.js", "!**/*nospec.js"],
 
-  "helpers": [
-    "helpers/**/*.js"
-  ],
+    "helpers": ["helpers/**/*.js"],
 
-  "failSpecWithNoExpectations": false,
+    "failSpecWithNoExpectations": false,
 
-  "stopSpecOnExpectationFailure": false,
+    "stopSpecOnExpectationFailure": false,
 
-  "stopOnSpecFailure": false,
+    "stopOnSpecFailure": false,
 
-  "random": false
+    "random": false
 }

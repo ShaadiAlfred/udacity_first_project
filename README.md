@@ -8,45 +8,45 @@ An API that uses [sharp](https://github.com/lovell/sharp) to generate thumbnails
 
 ### Notes
 
-- >If the `filename` doesn't include an extension, `.jpg` will be assumed.
+-   > If the `filename` doesn't include an extension, `.jpg` will be assumed.
 
-- >The API caches the first generated thumbnail only, and if the requested dimensions are different than the cached image, the response will have the correct dimensions, but the cached image will be the same with the old dimensions. Caching happens only once for each image.
+-   > The API caches the first generated thumbnail only, and if the requested dimensions are different than the cached image, the response will have the correct dimensions, but the cached image will be the same with the old dimensions. Caching happens only once for each image.
 
 ## npm scripts
 
-- ### `npm run start`
+-   ### `npm run start`
 
 Starts the server, intended to be run in production
 
-- ### `npm run dev`
+-   ### `npm run dev`
 
 Starts nodemon with ts-node support, so it updates whenever any `*.ts` files are modified
 
-- ### `npm run build`
+-   ### `npm run build`
 
 Builds the files in the `src` directory, and outputs the transpiled `JavaScript` code into the `dist` directory
 
-- ### `npm run jasmine`
+-   ### `npm run jasmine`
 
 Runs jasmine.
 
 #### Note
 
->Doesn't build the project before running the tests, it just runs the tests directly
+> Doesn't build the project before running the tests, it just runs the tests directly
 
-- ### `npm run test`
+-   ### `npm run test`
 
 Builds the project, and then runs the jasmine tests
 
-- ### `npm run lint`
+-   ### `npm run lint`
 
 Lints the project (just the `src` folder and its subdirectories) and shows the linting results
 
 #### Note
 
->ESLint is configured to use Prettier rules as linting rules too
+> ESLint is configured to use Prettier rules as linting rules too
 
-- ### `npm run lintf`
+-   ### `npm run lintf`
 
 Lints and fixes any issues found in the code
 
